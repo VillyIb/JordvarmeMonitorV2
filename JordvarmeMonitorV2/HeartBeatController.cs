@@ -33,7 +33,7 @@ public  class HeartBeatController : IHeartBeatController, IChangeMode
     {
         if (LastHeartBeatSentOut is null) return true;
 
-        if (LastHeartBeatSentOut.Value.AddHours(1) < _dateTimeFacade.Now) return true;
+        if (LastHeartBeatSentOut.Value.AddHours(1) <= _dateTimeFacade.Now) return true;
 
         return false;
     }
