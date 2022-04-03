@@ -4,6 +4,7 @@
 /// Enables to control time by providing fixed value returned by property Now.
 /// Defaults to DateTime.Now
 /// </summary>
+[Obsolete]
 public class DateTimeFacade
 {
     private TimeSpan? _currentTime;

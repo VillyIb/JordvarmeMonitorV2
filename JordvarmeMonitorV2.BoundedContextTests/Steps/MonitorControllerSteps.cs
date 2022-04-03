@@ -1,6 +1,8 @@
-﻿using JordvarmeMonitorV2.BoundedContextTests.Drivers;
+﻿using System;
+using JordvarmeMonitorV2.BoundedContextTests.Drivers;
 using JordvarmeMonitorV2.BoundedContextTests.Support;
 using JordvarmeMonitorV2.Constants;
+using JordvarmeMonitorV2.Util;
 using NSubstitute;
 using TechTalk.SpecFlow;
 using Xunit;
@@ -50,7 +52,7 @@ namespace JordvarmeMonitorV2.BoundedContextTests.Steps
         {
             if (Notification.Stopped == notification)
             {
-                _fakeNotifications.Received(1).NotifyStopped();
+                _fakeNotifications.Received(1).NotifyStopped(Arg.Any<TimeSpan>());
             }
             else
             {

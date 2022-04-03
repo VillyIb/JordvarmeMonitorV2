@@ -1,5 +1,6 @@
 ﻿
 using JordvarmeMonitorV2.Constants;
+using JordvarmeMonitorV2.Util;
 
 namespace JordvarmeMonitorV2;
 
@@ -35,7 +36,7 @@ public  class FileAndTimerFacade
 
     private void OnChanged(object sender, FileSystemEventArgs e)
     {
-        Console.WriteLine("{0:HH:mm:ss.fff} - Received Changed event", DateTime.Now);
+        Console.WriteLine("{0:HH:mm:ss.fff} - Received Changed event", SystemDateTime.Now);
         ResetTimer();
         _client.ActivityDetected();
     }

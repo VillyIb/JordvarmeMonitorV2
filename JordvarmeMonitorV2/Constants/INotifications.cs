@@ -4,5 +4,5 @@ public interface INotifications
 {
     void NotifyRunning();
 
-    void NotifyStopped();
+    void NotifyStopped(TimeSpan duration);
 }

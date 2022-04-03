@@ -1,16 +1,15 @@
 ﻿using JordvarmeMonitorV2.Constants;
+using JordvarmeMonitorV2.Util;
 
 namespace JordvarmeMonitorV2;
 
 public  class HeartBeatController : IHeartBeatController, IChangeMode
 {
     private readonly IHeartBeatNotifications _notifications;
-    private readonly DateTimeFacade _dateTimeFacade;
 
-    public HeartBeatController(IHeartBeatNotifications notifications, DateTimeFacade dateTimeFacade)
+    public HeartBeatController(IHeartBeatNotifications notifications)
     {
         _notifications = notifications;
-        _dateTimeFacade = dateTimeFacade;
     }
 
     private bool _isRunningField;
@@ -23,7 +22,7 @@ public  class HeartBeatController : IHeartBeatController, IChangeMode
             _isRunningField = value;
             if (!value)
             {
-                LastHeartBeatSentOut = _dateTimeFacade.Now;
+                LastHeartBeatSentOut = SystemDateTime.Now;
             }
         } }
 
@@ -33,18 +32,22 @@ public  class HeartBeatController : IHeartBeatController, IChangeMode
     {
         if (LastHeartBeatSentOut is null) return true;
 
-        if (LastHeartBeatSentOut.Value.AddHours(1) <= _dateTimeFacade.Now) return true;
+        if (LastHeartBeatSentOut.Value.AddHours(1) <= SystemDateTime.Now) return true;
 
         return false;
     }
 
     private bool ModeRunningFilter()
     {
-        if (_dateTimeFacade.Now < DateTime.Today.AddHours(6)) return false;
+        if (SystemDateTime.Now < SystemDateTime.Today.AddHours(6)) return false;
 
         if (LastHeartBeatSentOut is null) return true;
 
-        return LastHeartBeatSentOut.Value.Date < DateTime.Today;
+        return 
+            (LastHeartBeatSentOut.Value < SystemDateTime.Today.AddHours(6 ))
+               && 
+               (LastHeartBeatSentOut.Value.Date <= SystemDateTime.Today)
+        ;
     }
 
     public void HeartBeat()
@@ -52,13 +55,13 @@ public  class HeartBeatController : IHeartBeatController, IChangeMode
         if (IsRunning)
         {
             if (!ModeRunningFilter()) { return; }
-            LastHeartBeatSentOut = _dateTimeFacade.Now;
+            LastHeartBeatSentOut = SystemDateTime.Now;
             _notifications.HeartBeatOk();
         }
         else
         {
             if (!ModeStoppedFilter()) { return; }
-            LastHeartBeatSentOut = _dateTimeFacade.Now;
+            LastHeartBeatSentOut = SystemDateTime.Now;
             _notifications.HeartBeatStopped();
         }
     }

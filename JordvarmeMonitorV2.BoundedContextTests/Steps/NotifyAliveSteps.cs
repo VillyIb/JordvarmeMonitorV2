@@ -3,6 +3,7 @@ using System.Globalization;
 using JordvarmeMonitorV2.BoundedContextTests.Drivers;
 using JordvarmeMonitorV2.BoundedContextTests.Support;
 using JordvarmeMonitorV2.Constants;
+using JordvarmeMonitorV2.Util;
 using NSubstitute;
 using TechTalk.SpecFlow;
 
@@ -14,19 +15,16 @@ namespace JordvarmeMonitorV2.BoundedContextTests.Steps
         private readonly MonitorControllerContext _monitorControllerContext;
         private readonly NotifyAliveDriver _monitorControllerDriver;
         private readonly IHeartBeatNotifications _fakeHeartbeatNotifications;
-        private readonly DateTimeFacade _dateTimeFacade;
 
         public NotifyAliveSteps(MonitorControllerContext monitorControllerContext)
         {
             _monitorControllerContext = monitorControllerContext;
 
-            _dateTimeFacade = new DateTimeFacade();
-
             var fakeNotifications = Substitute.For<INotifications>();
 
             _fakeHeartbeatNotifications = Substitute.For<IHeartBeatNotifications>();
 
-            _monitorControllerDriver = new NotifyAliveDriver(fakeNotifications, _fakeHeartbeatNotifications, _dateTimeFacade);
+            _monitorControllerDriver = new NotifyAliveDriver(fakeNotifications, _fakeHeartbeatNotifications);
         }
 
         [Given(@"the system is monitoring in (.*) Mode"), Scope(Feature = "NotifyAlive")]
@@ -50,7 +48,7 @@ namespace JordvarmeMonitorV2.BoundedContextTests.Steps
             var formatProvider = CultureInfo.InvariantCulture;
             var format = "g";
             var styles = TimeSpanStyles.None;
-            _dateTimeFacade.SetTime(TimeSpan.ParseExact(input, format, formatProvider, styles));
+            SystemDateTime.SetTime(TimeSpan.ParseExact(input, format, formatProvider, styles));
         }
 
         [Then(@"(.*) '([^']*)' is sent"), Scope(Feature = "NotifyAlive")]
@@ -74,6 +72,7 @@ namespace JordvarmeMonitorV2.BoundedContextTests.Steps
             }
         }
 
+        [Given(@"an (.*) event is received"), Scope(Feature = "NotifyAlive")]
         [Given(@"a (.*) event is received"), Scope(Feature = "NotifyAlive")]
         public void GivenATimeoutEventIsReceived(Event @event)
         {

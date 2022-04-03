@@ -29,10 +29,9 @@ namespace JordvarmeMonitorV2.BoundedContextTests.Drivers
         public NotifyAliveDriver(
             INotifications notifications,
             IHeartBeatNotifications heartBeatNotifications
-            , DateTimeFacade dateTimeFacade
         )
         {
-            _monitorClient = new HeartBeatController(heartBeatNotifications, dateTimeFacade);
+            _monitorClient = new HeartBeatController(heartBeatNotifications);
             _fileSystemWatcherClient = new Monitor(notifications, (IChangeMode)_monitorClient);
         }
 

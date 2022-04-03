@@ -1,13 +1,16 @@
 ﻿using JordvarmeMonitorV2.Constants;
+using JordvarmeMonitorV2.Util;
 
 namespace JordvarmeMonitorV2;
 
-public  class Monitor : IFileSystemWatcherClient
+public class Monitor : IFileSystemWatcherClient
 {
     private readonly INotifications _notifications;
     private readonly IChangeMode? _modeTarget;
 
     private bool _isRunningField;
+
+    private DateTime StopTimeUtc { get; set; }
 
     public bool IsRunning
     {
@@ -15,7 +18,11 @@ public  class Monitor : IFileSystemWatcherClient
         private set
         {
             _isRunningField = value;
-            if(_modeTarget is not null) {_modeTarget.IsRunning = value;}
+            if (_modeTarget is not null)
+            {
+                _modeTarget.IsRunning = value;
+                StopTimeUtc = SystemDateTime.UtcNow;
+            }
         }
     }
 
@@ -27,7 +34,7 @@ public  class Monitor : IFileSystemWatcherClient
 
     public void ActivityDetected()
     {
-        if(IsRunning) {return;}
+        if (IsRunning) { return; }
 
         IsRunning = true;
         _notifications.NotifyRunning();
@@ -35,8 +42,8 @@ public  class Monitor : IFileSystemWatcherClient
 
     public void TimeoutDetected()
     {
-        if(!IsRunning) {return;}
+        if (!IsRunning) { return; }
         IsRunning = false;
-        _notifications.NotifyStopped();
+        _notifications.NotifyStopped(StopTimeUtc.Subtract(SystemDateTime.UtcNow));
     }
 }
