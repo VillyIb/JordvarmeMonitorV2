@@ -1,8 +1,7 @@
-﻿namespace JordvarmeMonitorV2.BoundedContextTests.Support
+﻿namespace JordvarmeMonitorV2.BoundedContextTests.Support;
+
+public enum Event
 {
-    public enum Event
-    {
-        Timeout,
-        Update
-    }
+    Timeout,
+    Update
 }

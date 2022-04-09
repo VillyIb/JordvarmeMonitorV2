@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JordvarmeMonitorV2", "JordvarmeMonitorV2\JordvarmeMonitorV2.csproj", "{621BD0B6-2F6D-413C-8EBF-A77CFEBE58CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JordvarmeMonitorV2", "JordvarmeMonitorV2\JordvarmeMonitorV2.csproj", "{621BD0B6-2F6D-413C-8EBF-A77CFEBE58CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JordvarmeMonitorV2.BoundedContextTests", "JordvarmeMonitorV2.BoundedContextTests\JordvarmeMonitorV2.BoundedContextTests.csproj", "{8375EF1E-E989-43A0-A76E-2E700D1A5CA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JordvarmeMonitorV2.BoundedContextTests", "JordvarmeMonitorV2.BoundedContextTests\JordvarmeMonitorV2.BoundedContextTests.csproj", "{8375EF1E-E989-43A0-A76E-2E700D1A5CA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JordvarmeMonitorV2.IntegrationTest", "Notifications.IntegrationTest\JordvarmeMonitorV2.IntegrationTest.csproj", "{9CFF835B-918C-4525-B500-6CD82FFCB892}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JordvarmeMonitorV2.UnitTests", "JordvarmeMonitorV2.UnitTests\JordvarmeMonitorV2.UnitTests.csproj", "{6BF4943E-718A-44C5-8A2E-9BC1BD901D44}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{8375EF1E-E989-43A0-A76E-2E700D1A5CA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8375EF1E-E989-43A0-A76E-2E700D1A5CA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8375EF1E-E989-43A0-A76E-2E700D1A5CA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CFF835B-918C-4525-B500-6CD82FFCB892}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CFF835B-918C-4525-B500-6CD82FFCB892}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CFF835B-918C-4525-B500-6CD82FFCB892}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CFF835B-918C-4525-B500-6CD82FFCB892}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BF4943E-718A-44C5-8A2E-9BC1BD901D44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BF4943E-718A-44C5-8A2E-9BC1BD901D44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BF4943E-718A-44C5-8A2E-9BC1BD901D44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BF4943E-718A-44C5-8A2E-9BC1BD901D44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

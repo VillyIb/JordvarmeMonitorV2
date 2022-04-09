@@ -1,32 +1,23 @@
 ﻿
-using JordvarmeMonitorV2.Constants;
-using JordvarmeMonitorV2.Util;
+using JordvarmeMonitorV2.Contracts;
 
 namespace JordvarmeMonitorV2;
 
 using System.Timers;
+using Util;
 
-public interface IFileSystemWatcherClient
-{
-    void ActivityDetected();
-
-    void TimeoutDetected();
-
-    bool IsRunning { get; }
-}
-
-public  class FileAndTimerFacade
+public class FileAndTimerFacade
 {
 #if DEBUG
-    private static readonly double IntervalInMiliSeconds = 1000 * 30; // half minute
-    private static readonly string WatchPath = @"C:\Development\JordvarmeMonitor\MonitorDirectory\";
+    public static readonly double IntervalInMilliseconds = 1000 * 20; // 1/4 minute
+    public static readonly string WatchPath = @"C:\Development\JordvarmeMonitor\MonitorDirectory\";
 #else
-        private static readonly double IntervalInMiliSeconds = 1000 * 60 * 2; // two minute
-        private static readonly string WatchPath = @"C:\GitRepositories\JordvarmeController\JordvarmeController\BoosterLog\";
+        public static readonly double IntervalInMilliseconds = 1000 * 60 * 2; // two minute
+        public static readonly string WatchPath = @"C:\GitRepositories\JordvarmeController\JordvarmeController\BoosterLog\";
 #endif
     private readonly IFileSystemWatcherClient _client;
 
-    private readonly System.Timers.Timer _timer;
+    private readonly Timer _timer;
 
     private void ResetTimer()
     {
@@ -40,9 +31,9 @@ public  class FileAndTimerFacade
         ResetTimer();
         _client.ActivityDetected();
     }
-    private  void OnTimedEvent(object? source, ElapsedEventArgs e)
+    private void OnTimedEvent(object? source, ElapsedEventArgs e)
     {
-        Console.WriteLine("{0:HH:mm:ss.fff} - The Elapsed event was raised ({1})", e.SignalTime, _timer.Interval);
+        Console.WriteLine("{0:HH:mm:ss.fff} - The Elapsed timeout-event was raised ({1})", e.SignalTime, _timer.Interval);
         _client.TimeoutDetected();
     }
 
@@ -54,11 +45,11 @@ public  class FileAndTimerFacade
         watcher.Changed += OnChanged;
         watcher.Filter = "*.log";
         watcher.IncludeSubdirectories = false;
-            
-        _timer = new System.Timers.Timer(IntervalInMiliSeconds);
+
+        _timer = new Timer(IntervalInMilliseconds);
         _timer.Elapsed += OnTimedEvent;
         _timer.AutoReset = true;
-            
+
         watcher.EnableRaisingEvents = true;
         _timer.Enabled = true;
     }

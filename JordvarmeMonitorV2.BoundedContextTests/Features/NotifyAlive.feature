@@ -36,34 +36,34 @@ Scenario: One HeartBeatOk notification after mode has changed to Running
 	When a HeartBeat-event is received
 	Then 1 'HeartBeatOk' are sent
 
-Scenario: Only one HeartBeatStopped notification within one hour
+Scenario: Only one HeartBeatStopped notification within one 'DurationBetweenHeartBeatStopped'
 	Given the system is monitoring in Stopped Mode
 	And the time is 07:00:00
 	When a HeartBeat-event is received
-	And the time is 07:59:59
+	And the time is 07:04:59
 	And a HeartBeat-event is received
 	Then 1 'HeartBeatStopped' is sent
 
-Scenario: Multiple HeartBeatStopped notifications over multiple hours
+Scenario: Multiple HeartBeatStopped notifications over multiple 'DurationBetweenHeartBeatStopped'
 	Given the system is monitoring in Stopped Mode
 	And the time is 07:00:00
 	When a HeartBeat-event is received
-	And the time is 08:00:00
+	And the time is 07:05:00
 	And a HeartBeat-event is received
 	Then 2 'HeartBeatStopped' are sent
 
-Scenario: No HeartBeatStopped notification within one hour after a mode change to Stopped
+Scenario: No HeartBeatStopped notification within one 'DurationBetweenHeartBeatStopped' after a mode change to Stopped
 	Given the system is monitoring in Running Mode
 	And the time is 07:00:00
 	And a Timeout event is received
-	And the time is 07:59:59
+	And the time is 07:04:59
 	When a HeartBeat-event is received
 	Then 0 'HeartBeatStopped' is sent
 
-Scenario: One HeartBeatStopped notification after one hour after a mode change to Stopped
+Scenario: One HeartBeatStopped notification after one 'DurationBetweenHeartBeatStopped' after a mode change to Stopped
 	Given the system is monitoring in Running Mode
 	And the time is 07:00:00
 	And a Timeout event is received
-	And the time is 08:00:00
+	And the time is 07:05:00
 	When a HeartBeat-event is received
 	Then 1 'HeartBeatStopped' is sent

@@ -1,4 +1,4 @@
-﻿namespace JordvarmeMonitorV2.Constants;
+﻿namespace JordvarmeMonitorV2.Contracts;
 
 public  interface IChangeMode
 {

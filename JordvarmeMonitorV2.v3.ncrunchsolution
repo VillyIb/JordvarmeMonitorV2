@@ -3,4 +3,12 @@
     <AllowParallelTestExecution>True</AllowParallelTestExecution>
     <SolutionConfigured>True</SolutionConfigured>
   </Settings>
+  <EngineModes>
+    <EngineMode>
+      <Name>IntegrationTest</Name>
+      <Settings>
+        <TestFilter>(ProjectNameMatchesRegex '*IntegrationTest*' AND True)</TestFilter>
+      </Settings>
+    </EngineMode>
+  </EngineModes>
 </SolutionConfiguration>

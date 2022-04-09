@@ -1,13 +1,12 @@
-﻿namespace JordvarmeMonitorV2.BoundedContextTests.Support
+﻿namespace JordvarmeMonitorV2.BoundedContextTests.Support;
+
+/// <summary>
+/// Mode: {Stopped | Running}
+/// </summary>
+public enum Mode
 {
-    /// <summary>
-    /// Mode: {Stopped | Running}
-    /// </summary>
-    public enum Mode
-    {
-        Stopped,
+    Stopped,
 
-        Running
+    Running
 
-    }
 }

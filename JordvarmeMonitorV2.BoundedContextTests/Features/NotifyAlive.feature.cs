@@ -256,14 +256,17 @@ this.FeatureBackground();
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Only one HeartBeatStopped notification within one hour")]
+        [Xunit.SkippableFactAttribute(DisplayName="Only one HeartBeatStopped notification within one \'DurationBetweenHeartBeatStoppe" +
+            "d\'")]
         [Xunit.TraitAttribute("FeatureTitle", "NotifyAlive")]
-        [Xunit.TraitAttribute("Description", "Only one HeartBeatStopped notification within one hour")]
-        public void OnlyOneHeartBeatStoppedNotificationWithinOneHour()
+        [Xunit.TraitAttribute("Description", "Only one HeartBeatStopped notification within one \'DurationBetweenHeartBeatStoppe" +
+            "d\'")]
+        public void OnlyOneHeartBeatStoppedNotificationWithinOneDurationBetweenHeartBeatStopped()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Only one HeartBeatStopped notification within one hour", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Only one HeartBeatStopped notification within one \'DurationBetweenHeartBeatStoppe" +
+                    "d\'", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 39
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -287,7 +290,7 @@ this.FeatureBackground();
  testRunner.When("a HeartBeat-event is received", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 43
- testRunner.And("the time is 07:59:59", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("the time is 07:04:59", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 44
  testRunner.And("a HeartBeat-event is received", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -299,14 +302,17 @@ this.FeatureBackground();
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Multiple HeartBeatStopped notifications over multiple hours")]
+        [Xunit.SkippableFactAttribute(DisplayName="Multiple HeartBeatStopped notifications over multiple \'DurationBetweenHeartBeatSt" +
+            "opped\'")]
         [Xunit.TraitAttribute("FeatureTitle", "NotifyAlive")]
-        [Xunit.TraitAttribute("Description", "Multiple HeartBeatStopped notifications over multiple hours")]
-        public void MultipleHeartBeatStoppedNotificationsOverMultipleHours()
+        [Xunit.TraitAttribute("Description", "Multiple HeartBeatStopped notifications over multiple \'DurationBetweenHeartBeatSt" +
+            "opped\'")]
+        public void MultipleHeartBeatStoppedNotificationsOverMultipleDurationBetweenHeartBeatStopped()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Multiple HeartBeatStopped notifications over multiple hours", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Multiple HeartBeatStopped notifications over multiple \'DurationBetweenHeartBeatSt" +
+                    "opped\'", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 47
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -330,7 +336,7 @@ this.FeatureBackground();
  testRunner.When("a HeartBeat-event is received", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 51
- testRunner.And("the time is 08:00:00", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("the time is 07:05:00", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 52
  testRunner.And("a HeartBeat-event is received", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -342,14 +348,17 @@ this.FeatureBackground();
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="No HeartBeatStopped notification within one hour after a mode change to Stopped")]
+        [Xunit.SkippableFactAttribute(DisplayName="No HeartBeatStopped notification within one \'DurationBetweenHeartBeatStopped\' aft" +
+            "er a mode change to Stopped")]
         [Xunit.TraitAttribute("FeatureTitle", "NotifyAlive")]
-        [Xunit.TraitAttribute("Description", "No HeartBeatStopped notification within one hour after a mode change to Stopped")]
-        public void NoHeartBeatStoppedNotificationWithinOneHourAfterAModeChangeToStopped()
+        [Xunit.TraitAttribute("Description", "No HeartBeatStopped notification within one \'DurationBetweenHeartBeatStopped\' aft" +
+            "er a mode change to Stopped")]
+        public void NoHeartBeatStoppedNotificationWithinOneDurationBetweenHeartBeatStoppedAfterAModeChangeToStopped()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("No HeartBeatStopped notification within one hour after a mode change to Stopped", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("No HeartBeatStopped notification within one \'DurationBetweenHeartBeatStopped\' aft" +
+                    "er a mode change to Stopped", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 55
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -373,7 +382,7 @@ this.FeatureBackground();
  testRunner.And("a Timeout event is received", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 59
- testRunner.And("the time is 07:59:59", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("the time is 07:04:59", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 60
  testRunner.When("a HeartBeat-event is received", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -385,14 +394,17 @@ this.FeatureBackground();
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="One HeartBeatStopped notification after one hour after a mode change to Stopped")]
+        [Xunit.SkippableFactAttribute(DisplayName="One HeartBeatStopped notification after one \'DurationBetweenHeartBeatStopped\' aft" +
+            "er a mode change to Stopped")]
         [Xunit.TraitAttribute("FeatureTitle", "NotifyAlive")]
-        [Xunit.TraitAttribute("Description", "One HeartBeatStopped notification after one hour after a mode change to Stopped")]
-        public void OneHeartBeatStoppedNotificationAfterOneHourAfterAModeChangeToStopped()
+        [Xunit.TraitAttribute("Description", "One HeartBeatStopped notification after one \'DurationBetweenHeartBeatStopped\' aft" +
+            "er a mode change to Stopped")]
+        public void OneHeartBeatStoppedNotificationAfterOneDurationBetweenHeartBeatStoppedAfterAModeChangeToStopped()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("One HeartBeatStopped notification after one hour after a mode change to Stopped", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("One HeartBeatStopped notification after one \'DurationBetweenHeartBeatStopped\' aft" +
+                    "er a mode change to Stopped", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 63
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -416,7 +428,7 @@ this.FeatureBackground();
  testRunner.And("a Timeout event is received", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 67
- testRunner.And("the time is 08:00:00", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("the time is 07:05:00", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 68
  testRunner.When("a HeartBeat-event is received", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");

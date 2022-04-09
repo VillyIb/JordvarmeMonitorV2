@@ -1,48 +1,71 @@
-﻿using JordvarmeMonitorV2.Constants;
-using JordvarmeMonitorV2.Tx;
+﻿using JordvarmeMonitorV2.Contracts;
+using JordvarmeMonitorV2.Util;
 
 namespace JordvarmeMonitorV2;
 
-public  class Notifications : INotifications
+public  class Notifications : INotifications, IHeartBeatNotifications
 {
-    private static readonly string StartMessage = @"Jordvarme styring monitor startet";
-    private static readonly string ReadyMessage = @"Ready";
-    private static readonly string RunningMessage = @"Jordvarme styring kører";
-    private static readonly string StoppedMessage = @"Jordvarme styring: stoppet {0:HH:mm}";
-    private static readonly string StillStoppedMessage = @"Jordvarme styring: fortsat stoppet";
-    private static readonly string DailyMessage = @"Jordvarme styring: kører fortsat";
+    // ReSharper disable StringLiteralTypo
 
-    private EmailSender emailSender;
+    private const string RunningSubject = @"Jordvarme styring kører {0:HH\:mm}";
+    private const string RunningBody = @"Jordvarme styring kører {0:HH\:mm}";
+            
+    private const string StoppedSubject = @"Jordvarme styring stoppet {0:HH\:mm}";
+    private const string StoppedBodyUpToOneHour = @"Jordvarme styring har kl {0:HH\:mm} været stoppet i {1:%m} min.";
+    private const string StoppedBodyOneToTwoHours = @"Jordvarme styring har kl {0:HH\:mm} været stoppet i {1:%h} time og {1:%m} min.";
+    private const string StoppedBodyTwoHoursPlus = @"Jordvarme styring har kl {0:HH\:mm} været stoppet i {1:%h} timer og {1:%m} min.";
+    
+    private const string DailyMessage = @"Jordvarme styring kører fortsat {0:HH\:mm}";
 
-    public Notifications()
+    // ReSharper restore StringLiteralTypo
+
+    private readonly IEmailSender _emailSender;
+
+    public Notifications(IEmailSender emailSender)
     {
-        emailSender = new EmailSender();
+        _emailSender = emailSender;
     }
-
 
     public void NotifyRunning()
     {
-        emailSender.Send(RunningMessage);
-    }
-
-    public void NotifyStopped(TimeSpan duration)
-    {
-        emailSender.Send(string.Format(StoppedMessage,duration));
+        var subject = string.Format(RunningSubject, SystemDateTime.Now);
+        var body = string.Format(RunningBody, SystemDateTime.Now);
+        _emailSender.Send(subject, body);
     }
 
     public void NotifyStopped()
     {
-        emailSender.Send(StoppedMessage);
+        var subject = string.Format(StoppedSubject, SystemDateTime.Now);
+        _emailSender.Send(subject, subject);
     }
-
-
+    
     public void HeartBeatOk()
     {
-        emailSender.Send(DailyMessage);
+        var subject = string.Format(DailyMessage, SystemDateTime.Now);
+        _emailSender.Send(subject, subject);
     }
 
-    public void HeartBeatStopped()
+    public void HeartBeatStopped(TimeSpan duration)
     {
-        emailSender.Send(StoppedMessage);
+        string format;
+        var oneHour = new TimeSpan(1, 0, 0);
+        var twoHours = new TimeSpan(2, 0, 0);
+
+        if (duration < oneHour)
+        {
+            format = StoppedBodyUpToOneHour;
+        }
+        else if (oneHour <= duration && duration < twoHours)
+        {
+            format = StoppedBodyOneToTwoHours;
+        }
+        else
+        {
+            format = StoppedBodyTwoHoursPlus;
+        }
+
+        var subject = string.Format(StoppedSubject, SystemDateTime.Now);
+        var body = string.Format(format, SystemDateTime.Now, duration);
+        _emailSender.Send(subject, body);
     }
 }

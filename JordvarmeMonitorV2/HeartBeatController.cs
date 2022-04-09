@@ -1,10 +1,16 @@
-﻿using JordvarmeMonitorV2.Constants;
+﻿using JordvarmeMonitorV2.Contracts;
 using JordvarmeMonitorV2.Util;
 
 namespace JordvarmeMonitorV2;
 
-public  class HeartBeatController : IHeartBeatController, IChangeMode
+public class HeartBeatController : IHeartBeatController, IChangeMode
 {
+#if DEBUG
+    public static readonly TimeSpan DurationBetweenHeartBeatStopped = new TimeSpan(0, 5, 0);
+#else
+    public static readonly TimeSpan DurationBetweenHeartBeatStopped = new TimeSpan(1, 0, 0);
+#endif
+
     private readonly IHeartBeatNotifications _notifications;
 
     public HeartBeatController(IHeartBeatNotifications notifications)
@@ -14,25 +20,35 @@ public  class HeartBeatController : IHeartBeatController, IChangeMode
 
     private bool _isRunningField;
 
+    private DateTime? LastHeartBeatSentOut { get; set; }
+
+    private DateTime? TimeOfFailure { get; set; }
+
     public bool IsRunning
     {
         get => _isRunningField;
         set
         {
             _isRunningField = value;
-            if (!value)
-            {
-                LastHeartBeatSentOut = SystemDateTime.Now;
-            }
-        } }
+            LastHeartBeatSentOut = SystemDateTime.Now;
 
-    private DateTime? LastHeartBeatSentOut { get; set; }
+            if (value) return;
+            TimeOfFailure = SystemDateTime.Now;
+        }
+    }
+
 
     private bool ModeStoppedFilter()
     {
-        if (LastHeartBeatSentOut is null) return true;
+        if (LastHeartBeatSentOut is null)
+        {
+            return true;
+        }
 
-        if (LastHeartBeatSentOut.Value.AddHours(1) <= SystemDateTime.Now) return true;
+        if (LastHeartBeatSentOut.Value.Add(DurationBetweenHeartBeatStopped) <= SystemDateTime.Now)
+        {
+            return true;
+        }
 
         return false;
     }
@@ -43,10 +59,10 @@ public  class HeartBeatController : IHeartBeatController, IChangeMode
 
         if (LastHeartBeatSentOut is null) return true;
 
-        return 
-            (LastHeartBeatSentOut.Value < SystemDateTime.Today.AddHours(6 ))
-               && 
-               (LastHeartBeatSentOut.Value.Date <= SystemDateTime.Today)
+        return
+            LastHeartBeatSentOut.Value < SystemDateTime.Today.AddHours(6)
+               &&
+               LastHeartBeatSentOut.Value.Date <= SystemDateTime.Today
         ;
     }
 
@@ -61,8 +77,11 @@ public  class HeartBeatController : IHeartBeatController, IChangeMode
         else
         {
             if (!ModeStoppedFilter()) { return; }
+
+            var duration =
+                SystemDateTime.Now.Subtract(TimeOfFailure ?? SystemDateTime.Now);
             LastHeartBeatSentOut = SystemDateTime.Now;
-            _notifications.HeartBeatStopped();
+            _notifications.HeartBeatStopped(duration);
         }
     }
 }
