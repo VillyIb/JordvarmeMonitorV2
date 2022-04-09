@@ -1,4 +1,5 @@
-﻿using JordvarmeMonitorV2.Contracts;
+﻿using JordvarmeMonitorV2.Constants;
+using JordvarmeMonitorV2.Contracts;
 using NSubstitute;
 using Xunit;
 
@@ -16,7 +17,7 @@ public class HeartBeatGeneratorShould
     [Fact]
     public void SendOneHeartBeat()
     {
-        Thread.Sleep((int)(HeartBeatGenerator.IntervalInMilliseconds * 1.1));
+        Thread.Sleep((int)(Settings.HeartBeatIntervalInMilliseconds * 1.1));
         _fakeHeartBeatController.Received(1).HeartBeat();
     }
 }

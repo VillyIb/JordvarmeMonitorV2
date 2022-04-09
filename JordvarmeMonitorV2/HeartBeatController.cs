@@ -1,16 +1,11 @@
-﻿using JordvarmeMonitorV2.Contracts;
+﻿using JordvarmeMonitorV2.Constants;
+using JordvarmeMonitorV2.Contracts;
 using JordvarmeMonitorV2.Util;
 
 namespace JordvarmeMonitorV2;
 
 public class HeartBeatController : IHeartBeatController, IChangeMode
 {
-#if DEBUG
-    public static readonly TimeSpan DurationBetweenHeartBeatStopped = new TimeSpan(0, 5, 0);
-#else
-    public static readonly TimeSpan DurationBetweenHeartBeatStopped = new TimeSpan(1, 0, 0);
-#endif
-
     private readonly IHeartBeatNotifications _notifications;
 
     public HeartBeatController(IHeartBeatNotifications notifications)
@@ -45,7 +40,7 @@ public class HeartBeatController : IHeartBeatController, IChangeMode
             return true;
         }
 
-        if (LastHeartBeatSentOut.Value.Add(DurationBetweenHeartBeatStopped) <= SystemDateTime.Now)
+        if (LastHeartBeatSentOut.Value.Add(Settings.DurationBetweenHeartBeatStopped) <= SystemDateTime.Now)
         {
             return true;
         }

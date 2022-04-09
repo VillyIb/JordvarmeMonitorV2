@@ -3,7 +3,7 @@
 using JordvarmeMonitorV2;
 using JordvarmeMonitorV2.Transmit;
 
-Console.WriteLine("Hello, World!");
+Console.WriteLine("Monitor start");
 
 var emailSender = new EmailSender();
 var notifications = new Notifications(emailSender);
@@ -15,3 +15,4 @@ var fileSystemWatchClient = new JordvarmeMonitorV2.Monitor(notifications, modeTa
 new FileAndTimerFacade(fileSystemWatchClient);
 
 Console.ReadLine();
+Console.WriteLine("Monitor stop");

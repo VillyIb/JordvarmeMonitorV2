@@ -1,4 +1,4 @@
-﻿
+﻿using JordvarmeMonitorV2.Constants;
 using JordvarmeMonitorV2.Contracts;
 
 namespace JordvarmeMonitorV2;
@@ -8,13 +8,6 @@ using Util;
 
 public class FileAndTimerFacade
 {
-#if DEBUG
-    public static readonly double IntervalInMilliseconds = 1000 * 20; // 1/4 minute
-    public static readonly string WatchPath = @"C:\Development\JordvarmeMonitor\MonitorDirectory\";
-#else
-        public static readonly double IntervalInMilliseconds = 1000 * 60 * 2; // two minute
-        public static readonly string WatchPath = @"C:\GitRepositories\JordvarmeController\JordvarmeController\BoosterLog\";
-#endif
     private readonly IFileSystemWatcherClient _client;
 
     private readonly Timer _timer;
@@ -27,13 +20,13 @@ public class FileAndTimerFacade
 
     private void OnChanged(object sender, FileSystemEventArgs e)
     {
-        Console.WriteLine("{0:HH:mm:ss.fff} - Received Changed event", SystemDateTime.Now);
+        Console.WriteLine(Text.LabelReceivedChangedEvent, SystemDateTime.Now);
         ResetTimer();
         _client.ActivityDetected();
     }
     private void OnTimedEvent(object? source, ElapsedEventArgs e)
     {
-        Console.WriteLine("{0:HH:mm:ss.fff} - The Elapsed timeout-event was raised ({1})", e.SignalTime, _timer.Interval);
+        Console.WriteLine(Text.LabelReceivedTimeoutEvent, e.SignalTime, _timer.Interval);
         _client.TimeoutDetected();
     }
 
@@ -41,12 +34,12 @@ public class FileAndTimerFacade
     {
         _client = client;
 
-        var watcher = new FileSystemWatcher(WatchPath);
+        var watcher = new FileSystemWatcher(Settings.WatchPath);
         watcher.Changed += OnChanged;
         watcher.Filter = "*.log";
         watcher.IncludeSubdirectories = false;
 
-        _timer = new Timer(IntervalInMilliseconds);
+        _timer = new Timer(Settings.IntervalInMilliseconds);
         _timer.Elapsed += OnTimedEvent;
         _timer.AutoReset = true;
 

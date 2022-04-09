@@ -1,4 +1,5 @@
-﻿using JordvarmeMonitorV2.Contracts;
+﻿using JordvarmeMonitorV2.Constants;
+using JordvarmeMonitorV2.Contracts;
 using NSubstitute;
 using Xunit;
 // ReSharper disable StringLiteralTypo
@@ -12,7 +13,7 @@ public class FileAndTimerFacadeShould
     
     private static void UpdateDirectory()
     {
-        var fileInfo = new FileInfo(Path.Combine(FileAndTimerFacade.WatchPath, "testfile.log"));
+        var fileInfo = new FileInfo(Path.Combine(Settings.WatchPath, "testfile.log"));
         using var sw = fileInfo.CreateText();
         sw.WriteLine("");
         sw.Flush();
@@ -27,7 +28,7 @@ public class FileAndTimerFacadeShould
     [Fact]
     public void SendTimeoutDetected()
     {
-        Thread.Sleep((int)(FileAndTimerFacade.IntervalInMilliseconds * 1.1));
+        Thread.Sleep((int)(Settings.IntervalInMilliseconds * 1.1));
         _fakeClient.Received(1).TimeoutDetected();
     }
 
@@ -43,18 +44,18 @@ public class FileAndTimerFacadeShould
     [Fact]
     public void NotReceiveTimeoutDetectedWhenUpdatingFile()
     {
-        Thread.Sleep((int)FileAndTimerFacade.IntervalInMilliseconds / 2);
+        Thread.Sleep((int)Settings.IntervalInMilliseconds / 2);
         UpdateDirectory();
-        Thread.Sleep((int)FileAndTimerFacade.IntervalInMilliseconds / 2);
+        Thread.Sleep((int)Settings.IntervalInMilliseconds / 2);
         UpdateDirectory();
-        Thread.Sleep((int)FileAndTimerFacade.IntervalInMilliseconds / 2);
+        Thread.Sleep((int)Settings.IntervalInMilliseconds / 2);
         _fakeClient.Received(0).TimeoutDetected();
     }
 
     [Fact]
     public void ReceiveMultipleTimeoutDetected()
     {
-        Thread.Sleep((int)FileAndTimerFacade.IntervalInMilliseconds * 2 + 1000 * 10);
+        Thread.Sleep((int)Settings.IntervalInMilliseconds * 2 + 1000 * 10);
         _fakeClient.Received(2).TimeoutDetected();
     }
 }
