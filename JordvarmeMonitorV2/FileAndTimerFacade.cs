@@ -8,7 +8,7 @@ using Util;
 
 public class FileAndTimerFacade
 {
-    private readonly IFileSystemWatcherClient _client;
+    private readonly IActivityMonitor _activityMonitor;
 
     private readonly Timer _timer;
 
@@ -22,17 +22,17 @@ public class FileAndTimerFacade
     {
         Console.WriteLine(Text.LabelReceivedChangedEvent, SystemDateTime.Now);
         ResetTimer();
-        _client.ActivityDetected();
+        _activityMonitor.ActivityDetected();
     }
     private void OnTimedEvent(object? source, ElapsedEventArgs e)
     {
         Console.WriteLine(Text.LabelReceivedTimeoutEvent, e.SignalTime, _timer.Interval);
-        _client.TimeoutDetected();
+        _activityMonitor.TimeoutDetected();
     }
 
-    public FileAndTimerFacade(IFileSystemWatcherClient client)
+    public FileAndTimerFacade(IActivityMonitor activityMonitor)
     {
-        _client = client;
+        _activityMonitor = activityMonitor;
 
         var watcher = new FileSystemWatcher(Settings.WatchPath);
         watcher.Changed += OnChanged;

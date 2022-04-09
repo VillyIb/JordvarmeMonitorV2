@@ -7,7 +7,7 @@ namespace JordvarmeMonitorV2;
 
 public class HeartBeatGenerator
 {
-    private readonly IHeartBeatController _heartBeatController;
+    private readonly IHeartBeatMonitor _heartBeatMonitor;
 
     private static Timer _timer = new();
 
@@ -19,15 +19,15 @@ public class HeartBeatGenerator
         _timer.Enabled = true;
     }
 
-    public HeartBeatGenerator(IHeartBeatController heartBeatController)
+    public HeartBeatGenerator(IHeartBeatMonitor heartBeatMonitor)
     {
-        _heartBeatController = heartBeatController;
+        _heartBeatMonitor = heartBeatMonitor;
         SetupTimer();
     }
 
     private void OnTimedEvent(object? source, ElapsedEventArgs e)
     {
         Console.WriteLine(Text.LabelHeartBeatEvent, e.SignalTime, _timer.Interval);
-        _heartBeatController.HeartBeat();
+        _heartBeatMonitor.HeartBeat();
     }
 }

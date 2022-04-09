@@ -7,10 +7,10 @@ Console.WriteLine("Monitor start");
 
 var emailSender = new EmailSender();
 var notifications = new Notifications(emailSender);
-var modeTarget = new HeartBeatController(notifications);
+var modeTarget = new HeartBeatMonitor(notifications);
 // ReSharper disable once ObjectCreationAsStatement
 new HeartBeatGenerator(modeTarget);
-var fileSystemWatchClient = new JordvarmeMonitorV2.Monitor(notifications, modeTarget);
+var fileSystemWatchClient = new JordvarmeMonitorV2.ActivityMonitor(notifications, modeTarget);
 // ReSharper disable once ObjectCreationAsStatement
 new FileAndTimerFacade(fileSystemWatchClient);
 

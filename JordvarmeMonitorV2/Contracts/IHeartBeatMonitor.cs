@@ -1,6 +1,6 @@
 ﻿namespace JordvarmeMonitorV2.Contracts;
 
-public interface IHeartBeatController
+public interface IHeartBeatMonitor
 {
     void HeartBeat();
 }

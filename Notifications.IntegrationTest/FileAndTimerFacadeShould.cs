@@ -9,7 +9,7 @@ namespace JordvarmeMonitorV2.IntegrationTest;
 [TestCaseOrderer("Alfa", "Bravo")]
 public class FileAndTimerFacadeShould
 {
-    private readonly IFileSystemWatcherClient _fakeClient = Substitute.For<IFileSystemWatcherClient>();
+    private readonly IActivityMonitor _fakeClient = Substitute.For<IActivityMonitor>();
     
     private static void UpdateDirectory()
     {

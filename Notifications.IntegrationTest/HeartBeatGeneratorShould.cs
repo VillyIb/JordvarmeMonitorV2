@@ -7,17 +7,17 @@ namespace JordvarmeMonitorV2.IntegrationTest;
 
 public class HeartBeatGeneratorShould
 {
-    private readonly IHeartBeatController _fakeHeartBeatController = Substitute.For<IHeartBeatController>();
+    private readonly IHeartBeatMonitor _fakeHeartBeatMonitor = Substitute.For<IHeartBeatMonitor>();
 
     public HeartBeatGeneratorShould()
     {
-        var _ = new HeartBeatGenerator(_fakeHeartBeatController);
+        var _ = new HeartBeatGenerator(_fakeHeartBeatMonitor);
     }
 
     [Fact]
     public void SendOneHeartBeat()
     {
         Thread.Sleep((int)(Settings.HeartBeatIntervalInMilliseconds * 1.1));
-        _fakeHeartBeatController.Received(1).HeartBeat();
+        _fakeHeartBeatMonitor.Received(1).HeartBeat();
     }
 }

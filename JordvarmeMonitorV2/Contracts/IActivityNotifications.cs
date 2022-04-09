@@ -1,6 +1,6 @@
 ﻿namespace JordvarmeMonitorV2.Contracts;
 
-public interface INotifications
+public interface IActivityNotifications
 {
     void NotifyRunning();
 

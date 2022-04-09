@@ -4,7 +4,7 @@ using JordvarmeMonitorV2.Util;
 
 namespace JordvarmeMonitorV2;
 
-public class Notifications : INotifications, IHeartBeatNotifications
+public class Notifications : IActivityNotifications, IHeartBeatNotifications
 {
     private readonly IEmailSender _emailSender;
 

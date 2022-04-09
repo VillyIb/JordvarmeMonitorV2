@@ -170,14 +170,14 @@ this.FeatureBackground();
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Only one HeartBeatOk from multiple notifications")]
+        [Xunit.SkippableFactAttribute(DisplayName="Only one HeartBeatOk from multiple activityNotifications")]
         [Xunit.TraitAttribute("FeatureTitle", "NotifyAlive")]
-        [Xunit.TraitAttribute("Description", "Only one HeartBeatOk from multiple notifications")]
+        [Xunit.TraitAttribute("Description", "Only one HeartBeatOk from multiple activityNotifications")]
         public void OnlyOneHeartBeatOkFromMultipleNotifications()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Only one HeartBeatOk from multiple notifications", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Only one HeartBeatOk from multiple activityNotifications", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 23
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -302,16 +302,16 @@ this.FeatureBackground();
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Multiple HeartBeatStopped notifications over multiple \'DurationBetweenHeartBeatSt" +
+        [Xunit.SkippableFactAttribute(DisplayName="Multiple HeartBeatStopped activityNotifications over multiple \'DurationBetweenHeartBeatSt" +
             "opped\'")]
         [Xunit.TraitAttribute("FeatureTitle", "NotifyAlive")]
-        [Xunit.TraitAttribute("Description", "Multiple HeartBeatStopped notifications over multiple \'DurationBetweenHeartBeatSt" +
+        [Xunit.TraitAttribute("Description", "Multiple HeartBeatStopped activityNotifications over multiple \'DurationBetweenHeartBeatSt" +
             "opped\'")]
         public void MultipleHeartBeatStoppedNotificationsOverMultipleDurationBetweenHeartBeatStopped()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Multiple HeartBeatStopped notifications over multiple \'DurationBetweenHeartBeatSt" +
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Multiple HeartBeatStopped activityNotifications over multiple \'DurationBetweenHeartBeatSt" +
                     "opped\'", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 47
 this.ScenarioInitialize(scenarioInfo);

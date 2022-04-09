@@ -7,7 +7,7 @@ namespace JordvarmeMonitorV2.UnitTests;
 
 public class NotificationsShould
 {
-    private readonly INotifications _sut1;
+    private readonly IActivityNotifications _sut1;
     private readonly IHeartBeatNotifications _sut2;
     private readonly IEmailSender _emailSender = Substitute.For<IEmailSender>();
 

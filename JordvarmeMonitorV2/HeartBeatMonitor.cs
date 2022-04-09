@@ -4,11 +4,11 @@ using JordvarmeMonitorV2.Util;
 
 namespace JordvarmeMonitorV2;
 
-public class HeartBeatController : IHeartBeatController, IChangeMode
+public class HeartBeatMonitor : IHeartBeatMonitor, IChangeMode
 {
     private readonly IHeartBeatNotifications _notifications;
 
-    public HeartBeatController(IHeartBeatNotifications notifications)
+    public HeartBeatMonitor(IHeartBeatNotifications notifications)
     {
         _notifications = notifications;
     }

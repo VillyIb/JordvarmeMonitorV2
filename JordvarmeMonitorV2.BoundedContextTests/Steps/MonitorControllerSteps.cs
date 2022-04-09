@@ -12,7 +12,7 @@ public class MonitorControllerSteps
 {
     private readonly MonitorControllerContext _monitorControllerContext;
     private readonly MonitorControllerDriver _monitorControllerDriver;
-    private readonly INotifications _fakeNotifications;
+    private readonly IActivityNotifications _fakeActivityNotifications;
 
     public MonitorControllerSteps(
         MonitorControllerContext monitorControllerContext
@@ -20,9 +20,9 @@ public class MonitorControllerSteps
     {
         _monitorControllerContext = monitorControllerContext;
 
-        _fakeNotifications = Substitute.For<INotifications>();
+        _fakeActivityNotifications = Substitute.For<IActivityNotifications>();
 
-        _monitorControllerDriver = new MonitorControllerDriver( _fakeNotifications);
+        _monitorControllerDriver = new MonitorControllerDriver( _fakeActivityNotifications);
     }
 
     [Given(@"the system is monitoring in (.*) Mode"), Scope(Feature = "Monitor the status of the Controller")]
@@ -35,7 +35,7 @@ public class MonitorControllerSteps
                 ? Event.Update 
                 : Event.Timeout
         );
-        _fakeNotifications.ClearReceivedCalls();
+        _fakeActivityNotifications.ClearReceivedCalls();
     }
 
     [When(@"a (.*) event is received"), Scope(Feature = "Monitor the status of the Controller")]
@@ -50,11 +50,11 @@ public class MonitorControllerSteps
     {
         if (Notification.Stopped == notification)
         {
-            _fakeNotifications.Received(1).NotifyStopped();
+            _fakeActivityNotifications.Received(1).NotifyStopped();
         }
         else
         {
-            _fakeNotifications.Received(1).NotifyRunning();
+            _fakeActivityNotifications.Received(1).NotifyRunning();
         }
     }
 

@@ -5,15 +5,15 @@ using Xunit;
 
 namespace JordvarmeMonitorV2.UnitTests;
 
-public class HeartBeatControllerShould
+public class HeartBeatMonitorShould
 {
-    private readonly HeartBeatController _sut;
+    private readonly HeartBeatMonitor _sut;
     private readonly IHeartBeatNotifications _fakeNotifications;
 
-    public HeartBeatControllerShould()
+    public HeartBeatMonitorShould()
     {
         _fakeNotifications = Substitute.For<IHeartBeatNotifications>();
-        _sut = new HeartBeatController(_fakeNotifications);
+        _sut = new HeartBeatMonitor(_fakeNotifications);
     }
 
     [Fact]

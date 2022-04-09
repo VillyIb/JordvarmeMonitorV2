@@ -5,8 +5,8 @@ namespace JordvarmeMonitorV2.BoundedContextTests.Drivers;
 
 public class NotifyAliveDriver
 {
-    private readonly IHeartBeatController _monitorClient;
-    private readonly IFileSystemWatcherClient _fileSystemWatcherClient;
+    private readonly IHeartBeatMonitor _monitorClient;
+    private readonly IActivityMonitor _activityMonitor;
 
     public void StubEventReceived(Event @event)
     {
@@ -15,24 +15,24 @@ public class NotifyAliveDriver
         {
             case Event.Timeout:
             {
-                _fileSystemWatcherClient.TimeoutDetected();
+                _activityMonitor.TimeoutDetected();
                 break;
             }
             case Event.Update:
             {
-                _fileSystemWatcherClient.ActivityDetected();
+                _activityMonitor.ActivityDetected();
                 break;
             }
         }
     }
 
     public NotifyAliveDriver(
-        INotifications notifications,
+        IActivityNotifications activityNotifications,
         IHeartBeatNotifications heartBeatNotifications
     )
     {
-        _monitorClient = new HeartBeatController(heartBeatNotifications);
-        _fileSystemWatcherClient = new Monitor(notifications, (IChangeMode)_monitorClient);
+        _monitorClient = new HeartBeatMonitor(heartBeatNotifications);
+        _activityMonitor = new ActivityMonitor(activityNotifications, (IChangeMode)_monitorClient);
     }
 
     public void StubNotifyEvent()

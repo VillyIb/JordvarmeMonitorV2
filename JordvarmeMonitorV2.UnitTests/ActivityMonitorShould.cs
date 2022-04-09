@@ -4,21 +4,21 @@ using Xunit;
 
 namespace JordvarmeMonitorV2.UnitTests
 {
-    public  class MonitorShould
+    public  class ActivityMonitorShould
     {
-        private readonly  Monitor _sut;
-        private readonly  INotifications _fakeNotifications = Substitute.For<INotifications>();
+        private readonly  ActivityMonitor _sut;
+        private readonly  IActivityNotifications _fakeActivityNotifications = Substitute.For<IActivityNotifications>();
 
-        public MonitorShould()
+        public ActivityMonitorShould()
         {
-            _sut = new Monitor(_fakeNotifications, null);
+            _sut = new ActivityMonitor(_fakeActivityNotifications, null);
         }
 
         [Fact]
         public void UnconditionallySendRunningUponFirstActivityDetected()
         {
             _sut.ActivityDetected();
-            _fakeNotifications.Received(1).NotifyRunning();
+            _fakeActivityNotifications.Received(1).NotifyRunning();
         }
 
         [Fact]
@@ -27,14 +27,14 @@ namespace JordvarmeMonitorV2.UnitTests
             _sut.ActivityDetected();
             _sut.ActivityDetected();
             _sut.ActivityDetected();
-            _fakeNotifications.Received(1).NotifyRunning();
+            _fakeActivityNotifications.Received(1).NotifyRunning();
         }
 
         [Fact]
         public void UnconditionallySendStoppedUponFirstTimeoutDetected()
         {
             _sut.TimeoutDetected();
-            _fakeNotifications.Received(1).NotifyStopped();
+            _fakeActivityNotifications.Received(1).NotifyStopped();
         }
 
         [Fact]
@@ -43,7 +43,7 @@ namespace JordvarmeMonitorV2.UnitTests
             _sut.TimeoutDetected();
             _sut.TimeoutDetected();
             _sut.TimeoutDetected();
-            _fakeNotifications.Received(1).NotifyStopped();
+            _fakeActivityNotifications.Received(1).NotifyStopped();
         }
 
     }

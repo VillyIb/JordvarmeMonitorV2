@@ -2,9 +2,9 @@
 
 namespace JordvarmeMonitorV2;
 
-public class Monitor : IFileSystemWatcherClient
+public class ActivityMonitor : IActivityMonitor
 {
-    private readonly INotifications _notifications;
+    private readonly IActivityNotifications _activityNotifications;
     private readonly IChangeMode? _modeTarget;
 
     private bool _isRunningField;
@@ -21,11 +21,12 @@ public class Monitor : IFileSystemWatcherClient
             }
         }
     }
-    public bool IsStartup { get; protected set; }
 
-    public Monitor(INotifications notifications, IChangeMode? modeTarget)
+    private bool IsStartup { get; set; }
+
+    public ActivityMonitor(IActivityNotifications activityNotifications, IChangeMode? modeTarget)
     {
-        _notifications = notifications;
+        _activityNotifications = activityNotifications;
         _modeTarget = modeTarget;
         IsStartup = true;
     }
@@ -37,7 +38,7 @@ public class Monitor : IFileSystemWatcherClient
 
         IsStartup = false;
         IsRunning = true;
-        _notifications.NotifyRunning();
+        _activityNotifications.NotifyRunning();
     }
 
     public void TimeoutDetected()
@@ -46,6 +47,6 @@ public class Monitor : IFileSystemWatcherClient
 
         IsStartup = false;
         IsRunning = false;
-        _notifications.NotifyStopped();
+        _activityNotifications.NotifyStopped();
     }
 }

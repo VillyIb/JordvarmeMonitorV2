@@ -5,13 +5,13 @@ namespace JordvarmeMonitorV2.BoundedContextTests.Drivers;
 
 public class MonitorControllerDriver
 {
-    private readonly IFileSystemWatcherClient _fileSystemWatcherClient;
+    private readonly IActivityMonitor _activityMonitor;
 
     public MonitorControllerDriver(
-        INotifications notifications
+        IActivityNotifications activityNotifications
     )
     {
-        _fileSystemWatcherClient = new Monitor(notifications, null);
+        _activityMonitor = new ActivityMonitor(activityNotifications, null);
     }
 
     public void StubEventReceived(Event @event)
@@ -21,12 +21,12 @@ public class MonitorControllerDriver
         {
             case Event.Timeout:
             {
-                _fileSystemWatcherClient.TimeoutDetected();
+                _activityMonitor.TimeoutDetected();
                 break;
             }
             case Event.Update:
             {
-                _fileSystemWatcherClient.ActivityDetected();
+                _activityMonitor.ActivityDetected();
                 break;
             }
         }
@@ -34,6 +34,6 @@ public class MonitorControllerDriver
 
     public Mode GetMode()
     {
-        return _fileSystemWatcherClient.IsRunning ? Mode.Running : Mode.Stopped;
+        return _activityMonitor.IsRunning ? Mode.Running : Mode.Stopped;
     }
 }

@@ -20,7 +20,7 @@ public class NotifyAliveSteps
     {
         _monitorControllerContext = monitorControllerContext;
 
-        var fakeNotifications = Substitute.For<INotifications>();
+        var fakeNotifications = Substitute.For<IActivityNotifications>();
 
         _fakeHeartbeatNotifications = Substitute.For<IHeartBeatNotifications>();
 
