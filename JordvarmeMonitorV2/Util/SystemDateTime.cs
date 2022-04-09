@@ -1,6 +1,10 @@
 ﻿// ReSharper disable UnusedMember.Global
+
+using System.Diagnostics.CodeAnalysis;
+
 namespace JordvarmeMonitorV2.Util;
 
+[ExcludeFromCodeCoverage]
 public static class SystemDateTime
 {
     #region Settings
@@ -53,7 +57,6 @@ public static class SystemDateTime
         }
     }
 
-
     /// <summary>
     /// Sets DateTime (Default = Now) and optionally set the Amplification (Default = realtime).
     /// An initialUtcDateTime of null selects the current DateTime.
@@ -85,7 +88,6 @@ public static class SystemDateTime
         Amplification = amplification;
     }
 
-
     /// <summary>
     /// Resets the SystemTimeStub to use the (MS) System.DateTime.
     /// </summary>
@@ -93,8 +95,6 @@ public static class SystemDateTime
     {
         SetTime(null);
     }
-
-
     static SystemDateTime()
     {
         Reset();

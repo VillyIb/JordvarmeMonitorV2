@@ -1,9 +1,11 @@
-﻿using System.Net;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Net;
 using System.Net.Mail;
 using JordvarmeMonitorV2.Contracts;
 using JordvarmeMonitorV2.Constants;
 namespace JordvarmeMonitorV2.Transmit;
 
+[ExcludeFromCodeCoverage]
 public class EmailSender : IEmailSender
 {
     private readonly object _lockObject = new();

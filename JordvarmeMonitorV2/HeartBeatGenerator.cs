@@ -9,19 +9,21 @@ public class HeartBeatGenerator
 {
     private readonly IHeartBeatMonitor _heartBeatMonitor;
 
-    private static Timer _timer = new();
+    private readonly Timer _timer = new ();
+    private readonly double _heartBeatIntervalInMilliseconds ;
 
     private void SetupTimer()
     {
-        _timer = new Timer(Settings.HeartBeatIntervalInMilliseconds);
+        _timer.Interval = _heartBeatIntervalInMilliseconds;
         _timer.Elapsed += OnTimedEvent;
         _timer.AutoReset = true;
         _timer.Enabled = true;
     }
 
-    public HeartBeatGenerator(IHeartBeatMonitor heartBeatMonitor)
+    public HeartBeatGenerator(IHeartBeatMonitor heartBeatMonitor, double heartBeatIntervalInMilliseconds)
     {
         _heartBeatMonitor = heartBeatMonitor;
+        _heartBeatIntervalInMilliseconds = heartBeatIntervalInMilliseconds;
         SetupTimer();
     }
 

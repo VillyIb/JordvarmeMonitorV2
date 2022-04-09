@@ -1,5 +1,4 @@
-﻿using JordvarmeMonitorV2.Constants;
-using JordvarmeMonitorV2.Contracts;
+﻿using JordvarmeMonitorV2.Contracts;
 using JordvarmeMonitorV2.Util;
 
 namespace JordvarmeMonitorV2;
@@ -7,10 +6,12 @@ namespace JordvarmeMonitorV2;
 public class HeartBeatMonitor : IHeartBeatMonitor, IChangeMode
 {
     private readonly IHeartBeatNotifications _notifications;
+    private readonly TimeSpan _durationBetweenHeartBeatStopped;
 
-    public HeartBeatMonitor(IHeartBeatNotifications notifications)
+    public HeartBeatMonitor(IHeartBeatNotifications notifications, TimeSpan durationBetweenHeartBeatStopped)
     {
         _notifications = notifications;
+        _durationBetweenHeartBeatStopped = durationBetweenHeartBeatStopped;
     }
 
     private bool _isRunningField;
@@ -40,7 +41,7 @@ public class HeartBeatMonitor : IHeartBeatMonitor, IChangeMode
             return true;
         }
 
-        if (LastHeartBeatSentOut.Value.Add(Settings.DurationBetweenHeartBeatStopped) <= SystemDateTime.Now)
+        if (LastHeartBeatSentOut.Value.Add(_durationBetweenHeartBeatStopped) <= SystemDateTime.Now)
         {
             return true;
         }

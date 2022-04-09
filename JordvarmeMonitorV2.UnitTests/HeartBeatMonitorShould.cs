@@ -9,11 +9,12 @@ public class HeartBeatMonitorShould
 {
     private readonly HeartBeatMonitor _sut;
     private readonly IHeartBeatNotifications _fakeNotifications;
+    private readonly TimeSpan _durationBetweenHeartBeatStopped = new(0, 5, 0);
 
     public HeartBeatMonitorShould()
     {
         _fakeNotifications = Substitute.For<IHeartBeatNotifications>();
-        _sut = new HeartBeatMonitor(_fakeNotifications);
+        _sut = new HeartBeatMonitor(_fakeNotifications, _durationBetweenHeartBeatStopped);
     }
 
     [Fact]
@@ -31,10 +32,10 @@ public class HeartBeatMonitorShould
         SystemDateTime.SetTime(new TimeSpan(0, 0, 0));
         _sut.IsRunning = false;
         _sut.HeartBeat();
-        SystemDateTime.SetTime(new TimeSpan(1, 0, 0));
+        SystemDateTime.SetTime(_durationBetweenHeartBeatStopped);
         _sut.HeartBeat();
         _sut.HeartBeat();
-        _fakeNotifications.Received(1).HeartBeatStopped(Arg.Is(new TimeSpan(1,0,0)));
+        _fakeNotifications.Received(1).HeartBeatStopped(Arg.Is(_durationBetweenHeartBeatStopped));
     }
 
     [Fact]
@@ -43,12 +44,12 @@ public class HeartBeatMonitorShould
         SystemDateTime.SetTime(new TimeSpan(0, 0, 0));
         _sut.IsRunning = false;
         _sut.HeartBeat();
-        SystemDateTime.SetTime(new TimeSpan(1, 0, 0));
+        SystemDateTime.SetTime(_durationBetweenHeartBeatStopped);
         _sut.HeartBeat();
-        SystemDateTime.SetTime(new TimeSpan(2, 0, 0));
+        SystemDateTime.SetTime(_durationBetweenHeartBeatStopped*2);
         _sut.HeartBeat();
-        _fakeNotifications.Received(1).HeartBeatStopped(Arg.Is(new TimeSpan(1, 0, 0)));
-        _fakeNotifications.Received(1).HeartBeatStopped(Arg.Is(new TimeSpan(2, 0, 0)));
+        _fakeNotifications.Received(1).HeartBeatStopped(Arg.Is(_durationBetweenHeartBeatStopped));
+        _fakeNotifications.Received(1).HeartBeatStopped(Arg.Is(_durationBetweenHeartBeatStopped*2));
     }
 
     [Fact]
@@ -82,5 +83,12 @@ public class HeartBeatMonitorShould
         SystemDateTime.SetTime(new TimeSpan(1, 6, 0, 0));
         _sut.HeartBeat();
         _fakeNotifications.Received(2).HeartBeatOk();
+    }
+
+    [Fact]
+    public void ReceiveHeartBeatStoppedHavingDefaultIsRunning()
+    {
+        _sut.HeartBeat();
+        _fakeNotifications.Received(1).HeartBeatStopped(Arg.Any<TimeSpan>());
     }
 }

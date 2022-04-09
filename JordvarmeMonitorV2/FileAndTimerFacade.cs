@@ -1,21 +1,24 @@
 ﻿using JordvarmeMonitorV2.Constants;
 using JordvarmeMonitorV2.Contracts;
+using System.Timers;
+using JordvarmeMonitorV2.Util;
 
 namespace JordvarmeMonitorV2;
-
-using System.Timers;
-using Util;
 
 public class FileAndTimerFacade
 {
     private readonly IActivityMonitor _activityMonitor;
 
-    private readonly Timer _timer;
+    private System.Timers.Timer? _timer;
+
+    private FileSystemWatcher? _watcher;
+
+    private readonly double _intervalInMilliseconds;
 
     private void ResetTimer()
     {
-        _timer.Stop();
-        _timer.Start();
+        _timer?.Stop();
+        _timer?.Start();
     }
 
     private void OnChanged(object sender, FileSystemEventArgs e)
@@ -30,20 +33,29 @@ public class FileAndTimerFacade
         _activityMonitor.TimeoutDetected();
     }
 
-    public FileAndTimerFacade(IActivityMonitor activityMonitor)
+    private void SetupFileSystemWatcher()
     {
-        _activityMonitor = activityMonitor;
+        _watcher = new FileSystemWatcher(Settings.WatchPath);
+        _watcher.Changed += OnChanged;
+        _watcher.Filter = "*.log";
+        _watcher.IncludeSubdirectories = false;
+        _watcher.EnableRaisingEvents = true;
+    }
 
-        var watcher = new FileSystemWatcher(Settings.WatchPath);
-        watcher.Changed += OnChanged;
-        watcher.Filter = "*.log";
-        watcher.IncludeSubdirectories = false;
-
-        _timer = new Timer(Settings.IntervalInMilliseconds);
+    private void SetupTimer()
+    {
+        _timer = new System.Timers.Timer(_intervalInMilliseconds);
         _timer.Elapsed += OnTimedEvent;
         _timer.AutoReset = true;
-
-        watcher.EnableRaisingEvents = true;
         _timer.Enabled = true;
+    }
+
+    public FileAndTimerFacade(IActivityMonitor activityMonitor, double intervalInMilliseconds)
+    {
+        _activityMonitor = activityMonitor;
+        _intervalInMilliseconds = intervalInMilliseconds;
+
+        SetupFileSystemWatcher();
+        SetupTimer();
     }
 }
