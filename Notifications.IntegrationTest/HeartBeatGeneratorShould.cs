@@ -1,5 +1,4 @@
-﻿using System.Transactions;
-using JordvarmeMonitorV2.Contracts;
+﻿using JordvarmeMonitorV2.Contracts;
 using NSubstitute;
 using Xunit;
 
