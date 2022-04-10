@@ -6,5 +6,7 @@ public interface IActivityMonitor
 
     void TimeoutDetected();
 
+    void Startup();
+
     bool IsRunning { get; }
 }

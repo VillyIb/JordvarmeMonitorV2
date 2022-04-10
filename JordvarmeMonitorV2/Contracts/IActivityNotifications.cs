@@ -5,4 +5,6 @@ public interface IActivityNotifications
     void NotifyRunning();
 
     void NotifyStopped();
+
+    void Startup(bool isStartup);
 }

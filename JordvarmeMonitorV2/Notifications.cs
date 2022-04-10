@@ -26,6 +26,13 @@ public class Notifications : IActivityNotifications, IHeartBeatNotifications
         _emailSender.Send(subject, subject);
     }
 
+    public void Startup(bool isStartup)
+    {
+        var subject = string.Format(Text.StartupSubject, SystemDateTime.Now);
+        var body = string.Format(isStartup ? Text.StartupBodyStartup : Text.StartupBodyRestart, SystemDateTime.Now);
+        _emailSender.Send(subject, body);
+    }
+
     public void HeartBeatOk()
     {
         var subject = string.Format(Text.DailyMessage, SystemDateTime.Now);

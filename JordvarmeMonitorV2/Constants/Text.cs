@@ -8,6 +8,11 @@ public static  class Text
 
     public const string LabelHeartBeatEvent = "{0:HH:mm:ss.fff} - Received heartbeat event ({1})";
 
+    public const string SentFrom = @"<p>Sent from: {0}</p>";
+    public const string StartupSubject = @"Jordvarme styring Startup {0:HH\:mm}";
+    public const string StartupBodyStartup = @"Jordvarme styring Startup {0:HH\:mm}";
+    public const string StartupBodyRestart = @"Jordvarme styring Genstart {0:HH\:mm}";
+
     public const string RunningSubject = @"Jordvarme styring kører {0:HH\:mm}";
     public const string RunningBody = @"Jordvarme styring kører {0:HH\:mm}";
 

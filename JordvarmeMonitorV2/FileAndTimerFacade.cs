@@ -29,7 +29,7 @@ public class FileAndTimerFacade
     }
     private void OnTimedEvent(object? source, ElapsedEventArgs e)
     {
-        Console.WriteLine(Text.LabelReceivedTimeoutEvent, e.SignalTime, _timer.Interval);
+        Console.WriteLine(Text.LabelReceivedTimeoutEvent, e.SignalTime, _timer?.Interval);
         _activityMonitor.TimeoutDetected();
     }
 
@@ -40,6 +40,16 @@ public class FileAndTimerFacade
         _watcher.Filter = "*.log";
         _watcher.IncludeSubdirectories = false;
         _watcher.EnableRaisingEvents = true;
+        _watcher.Error += ErrorEventHandler;
+        _activityMonitor.Startup();
+    }
+
+    public void ErrorEventHandler(object sender, ErrorEventArgs e)
+    {
+        Console.WriteLine("FileSystemWatcher thrown exception: {0}, {1}",e.GetException(), e.GetException().StackTrace);
+        _watcher?.Dispose();
+        _watcher = null;
+        SetupFileSystemWatcher();
     }
 
     private void SetupTimer()

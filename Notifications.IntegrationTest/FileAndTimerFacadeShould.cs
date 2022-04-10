@@ -9,9 +9,11 @@ namespace JordvarmeMonitorV2.IntegrationTest;
 [TestCaseOrderer("Alfa", "Bravo")]
 public class FileAndTimerFacadeShould
 {
-    private readonly IActivityMonitor _fakeClient = Substitute.For<IActivityMonitor>();
+    private readonly IActivityMonitor _fakeActivityMonitor = Substitute.For<IActivityMonitor>();
 
     private double _activityTimeoutIntervalInMilliseconds = 1000 * 2;
+
+    private readonly FileAndTimerFacade _sut;
 
 
     private static void UpdateDirectory()
@@ -24,14 +26,14 @@ public class FileAndTimerFacadeShould
 
     public FileAndTimerFacadeShould()
     {
-        var _ = new FileAndTimerFacade(_fakeClient, _activityTimeoutIntervalInMilliseconds);
+        _sut = new FileAndTimerFacade(_fakeActivityMonitor, _activityTimeoutIntervalInMilliseconds);
     }
 
     [Fact]
     public void SendTimeoutDetected()
     {
         Thread.Sleep((int)(_activityTimeoutIntervalInMilliseconds * 1.1));
-        _fakeClient.Received(1).TimeoutDetected();
+        _fakeActivityMonitor.Received(1).TimeoutDetected();
     }
 
     [Fact]
@@ -40,8 +42,8 @@ public class FileAndTimerFacadeShould
         Thread.Sleep((int)(_activityTimeoutIntervalInMilliseconds * 0.9));
         UpdateDirectory();
         Thread.Sleep((int)(_activityTimeoutIntervalInMilliseconds * 0.9));
-        _fakeClient.Received(1).ActivityDetected();
-        _fakeClient.Received(0).TimeoutDetected();
+        _fakeActivityMonitor.Received(1).ActivityDetected();
+        _fakeActivityMonitor.Received(0).TimeoutDetected();
     }
 
     [Fact]
@@ -52,13 +54,27 @@ public class FileAndTimerFacadeShould
         Thread.Sleep((int)(_activityTimeoutIntervalInMilliseconds * 0.9));
         UpdateDirectory();
         Thread.Sleep((int)(_activityTimeoutIntervalInMilliseconds * 0.9));
-        _fakeClient.Received(0).TimeoutDetected();
+        _fakeActivityMonitor.Received(0).TimeoutDetected();
     }
 
     [Fact]
     public void ReceiveMultipleTimeoutDetected()
     {
         Thread.Sleep((int)(_activityTimeoutIntervalInMilliseconds * 2.2));
-        _fakeClient.Received(2).TimeoutDetected();
+        _fakeActivityMonitor.Received(2).TimeoutDetected();
+    }
+
+    [Fact]
+    public void NotifyStartupUponStartup()
+    {
+        _fakeActivityMonitor.Received(1).Startup();
+    }
+
+    [Fact]
+    public void IssueRestartUponErrorEvent()
+    {
+        _fakeActivityMonitor.ClearReceivedCalls();
+        _sut.ErrorEventHandler(this,  new ErrorEventArgs(new ApplicationException("UnitTest")) );
+        _fakeActivityMonitor.Received(1).Startup();
     }
 }

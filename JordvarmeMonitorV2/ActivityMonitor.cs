@@ -9,6 +9,11 @@ public class ActivityMonitor : IActivityMonitor
 
     private bool _isRunningField;
 
+    public void Startup()
+    {
+        _activityNotifications.Startup(IsStartup);
+    }
+
     public bool IsRunning
     {
         get => _isRunningField;

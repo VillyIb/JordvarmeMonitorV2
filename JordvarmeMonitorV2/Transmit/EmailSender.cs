@@ -17,8 +17,9 @@ public class EmailSender : IEmailSender
             using var mail = new MailMessage();
             mail.From = new MailAddress(EmailSettings.EmailFromAddress);
             mail.To.Add(EmailSettings.EmailToAddress);
-            mail.Subject = subject;
-            mail.Body = body;
+            var hostname = Dns.GetHostEntry("").HostName;
+            mail.Subject = subject ;
+            mail.Body = body + string.Format(Text.SentFrom, hostname);
             mail.IsBodyHtml = true;
             using var smtp = new SmtpClient(EmailSettings.SmtpAddress, EmailSettings.PortNumber);
             smtp.Credentials = new NetworkCredential(EmailSettings.EmailFromAddress, EmailSettings.Password);
